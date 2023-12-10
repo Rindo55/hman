@@ -1,0 +1,13 @@
+CC = gcc
+CFLAGS = -Wall -std=c99
+
+all: hangman web_interface
+
+hangman: hangman.c
+    $(CC) $(CFLAGS) -o hangman hangman.c
+
+web_interface: main.c mongoose.c
+    $(CC) $(CFLAGS) -o web_interface main.c mongoose.c -lpthread
+
+clean:
+    rm -f hangman web_interface
