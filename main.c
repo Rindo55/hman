@@ -1,8 +1,10 @@
 #include "mongoose.h"
 
 static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
-    if (ev == MG_EV_HTTP_REQUEST) {
-        mg_http_send_response(nc, 200, "Content-Type: text/plain", "Hello, World!");
+    if (ev == MG_REQUEST_BEGIN) {
+        struct mg_http_message *hm = (struct mg_http_message *) ev_data;
+        mg_http_send_response(nc, 200, 0, "Content-Type: text/plain\r\n\r\nHello, World!");
+        nc->flags |= MG_F_SEND_AND_CLOSE;
     }
 }
 
