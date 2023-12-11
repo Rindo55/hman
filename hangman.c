@@ -91,7 +91,9 @@ static void fn(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
                           (int)hm->uri.len, hm->uri.ptr,
                           (int)hm->body.len, hm->body.ptr);
         } else {
-            struct mg_http_serve_opts opts = {.root_dir = "."};
+            struct mg_http_serve_opts opts;
+            mg_http_serve_opts_init(&opts);
+            opts.document_root = "."; // Set the root directory for serving files
             mg_http_serve_dir(c, hm, &opts);
         }
     }
